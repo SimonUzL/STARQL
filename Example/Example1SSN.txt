@@ -1,0 +1,26 @@
+PREFIX : <http://www.sport.com/Fitness/Pattern#>
+CREATE PULSE pulseA WITH 
+START = "2012-07-04T06:21:58CEST"^^XSD:DATETIME,
+END =  "2012-07-04T12:00:00CEST"^^XSD:DATETIME,
+FREQUENCY = "PT1M"^^XSD:DURATION
+				 
+CREATE STREAM S_out AS
+				 
+CONSTRUCT GRAPH NOW { ?s a :IncreasingSpeed . ?o1 a :Observation}
+FROM STREAM measurements [ NOW - "PT10M"^^XSD:DURATION, NOW ] -> "PT1M"^^XSD:DURATION
+USING PULSE pulseA
+WHERE { ?s a :GPSMap62st }
+SEQUENCE BY StdSeq AS SEQ1
+HAVING FORALL i, j IN SEQ1 ?x,?y (
+IF ((GRAPH i { 
+	?o1 a :Observation.
+	?o1 :observedBy ?s.
+	?o1 :observationResult ?r1.
+	?r1 :hasSpeed ?x 
+} AND GRAPH j {
+	?o2 a :Observation.
+	?o2 :observedBy ?s.
+	?o2 :observationResult ?r2.
+	?r2 :hasSpeed ?y
+}) AND i < j) THEN ?x <= ?y)
+

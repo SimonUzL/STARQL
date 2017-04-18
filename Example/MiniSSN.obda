@@ -1,0 +1,38 @@
+[PrefixDeclaration]
+:		http://www.sport.com/Fitness/Example#
+op:		http://www.sport.com/Fitness/Pattern#
+owl:		http://www.w3.org/2002/07/owl#
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+xml:		http://www.w3.org/XML/1998/namespace#
+xsd:		http://www.w3.org/2001/XMLSchema#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+
+[SourceDeclaration]
+sourceUri	Fitness
+connectionUrl	jdbc:postgresql://localhost:5432/sport
+username	postgres
+password	postgres
+driverClass	org.postgresql.Driver
+
+[MappingDeclaration] @collection [[
+mappingId	Mapping - Observation
+target		op:O_{timestamp} a op:Observation .
+source		SELECT timestamp FROM measurements
+
+mappingId	Mapping - observedBy
+target		op:O_{timestamp} op:observedBy op:S_{profile} .
+source		SELECT timestamp, profile FROM measurements
+
+mappingId	Mapping - GPSSensor
+target		op:S_{profile} a op:GPSMap62st .
+source		SELECT profile FROM measurements
+
+mappingId	Mapping - observationResult
+target		op:O_{timestamp} op:observationResult op:R_{timestamp} .
+source		SELECT timestamp FROM measurements
+
+mappingId   	Mapping - hasSpeed
+target		op:R_{timestamp} op:hasSpeed {speed}^^xsd:double .
+source		SELECT timestamp, speed FROM measurements
+]]
+
