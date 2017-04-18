@@ -1,0 +1,19 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,fit}
+
+% pdflatex cluster.tex && convert -density 300 cluster.pdf -quality 100 cluster.png
+
+\begin{document}
+	\begin{tikzpicture}
+		\node[draw, minimum width=1.6cm, minimum height=0.6cm] (m0) {master};
+		\node[draw, minimum width=1.6cm, minimum height=0.6cm] (n0) [below of=m0] {slave01};
+		\node[draw, node distance=2cm, minimum width=1.6cm, minimum height=0.6cm] (n1) [left of=n0] {slave00};
+		\node[draw, node distance=2cm, minimum width=1.6cm, minimum height=0.6cm] (n2) [right of=n0] {\dots};
+		\path[->]
+		(m0) edge node[auto] {\tiny{ssh}} (n0)
+		(m0) edge node[above] {\tiny{ssh}} (n1.north);
+		\path[->,dotted]
+		(m0) edge node[auto] {\tiny{ssh}} (n2.north);
+	\end{tikzpicture}
+\end{document}

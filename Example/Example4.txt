@@ -1,0 +1,15 @@
+PREFIX : <http://www.sport.com/Fitness/Pattern#>
+CREATE PULSE pulseA WITH 
+START = "2012-07-04T06:21:58CEST"^^XSD:DATETIME,
+END =  "2012-07-23T00:54:35CEST"^^xsd:dateTime,
+FREQUENCY = "PT1M"^^XSD:DURATION
+				 
+CREATE STREAM S_out AS
+				 
+CONSTRUCT GRAPH NOW { ?profile a :IncreasingHeight }
+FROM STREAM measurements [ NOW - "PT100M"^^XSD:DURATION, NOW ]-> "PT5M"^^XSD:DURATION
+USING PULSE pulseA
+SEQUENCE BY StdSeq AS SEQ1
+HAVING FORALL i, j IN SEQ1 ?x,?y(
+IF ((GRAPH i { ?profile :hasHeight ?x } AND GRAPH j { ?profile :hasHeight ?y }) AND i < j)
+THEN ?x <= ?y)
