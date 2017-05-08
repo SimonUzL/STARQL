@@ -34,7 +34,7 @@
 			<id>starql</id>
 			<name>SQL-Transform</name>
 			<layout>default</layout>
-			<url>https://cyberworm.ddns.net/nexus/content/repositories/starql/</url>
+			<url>https://www.simon-schiff.org/nexus/content/repositories/starql/</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>

@@ -29,18 +29,6 @@
 		</plugins>
 	</build>
 
-	<repositories>
-		<repository>
-			<id>starql</id>
-			<name>SQL-Transform</name>
-			<layout>default</layout>
-			<url>https://cyberworm.ddns.net/nexus/content/repositories/starql/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
