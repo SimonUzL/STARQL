@@ -11,7 +11,4 @@ cache:
   directories:
   - $HOME/.m2
 script:
-  - mvn -f Generator/pom.xml clean verify
-  - mvn -f Historic/pom.xml clean verify
-  - mvn -f Starqlpostgres/pom.xml clean verify
-  - mvn -f Streaming/pom.xml clean verify
+  - mvn install
